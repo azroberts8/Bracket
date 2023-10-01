@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap');
 @import url('login.css');
+@import url('dashboard.css');
 
 * {
     box-sizing: border-box;
@@ -68,6 +69,12 @@ a:hover {
 
 a::after {
     content: ' ›';
+}
+
+p {
+    font-family: 'Rajdhani', sans-serif;
+    color: #fff;
+    margin: 6pt 12pt;
 }
 
 header {

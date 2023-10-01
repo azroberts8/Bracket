@@ -1,0 +1,79 @@
+.dashboard {
+    display: grid;
+    grid-template-columns: 176pt auto;
+    column-gap: 10pt;
+    margin: 10pt;
+}
+
+.dashboard .profile {
+    height: 100pt;
+    margin-top: 38pt;
+    margin-bottom: 16pt;
+}
+
+.dashboard .profile .profileImage {
+    display: inline-block;
+    margin: -27pt 27pt;
+    width: 110pt;
+    height: 110pt;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    border: 1pt solid rgb(220, 255, 255);
+    box-shadow: 0px 0px 12px -3px rgba(255,255,255,0.5),0px 0px 15px 0px rgba(255,255,255,0.1),0px 0px 15px -3px rgba(115,252,252,0.1);
+}
+
+.dashboard .profile .profileName {
+    display: inline-block;
+    vertical-align: top;
+    margin: 10.5pt 0;
+}
+
+.dashboard .selectTournament {
+    height: 110pt;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-bottom: 25pt;
+}
+
+.dashboard .selectTournament .eventActionItem h2 {
+    margin-top: 20pt
+}
+
+.dashboard .selectTournament .eventActionItem {
+    text-align: center;
+}
+
+.dashboard .selectTournament .eventActionItem input {
+    margin-right: 3.25pt;
+    margin-top: 0;
+}
+
+.dashboard .selectTournament .eventActionItem button {
+    margin-left: 3.25pt;
+    margin-top: 0;
+}
+
+.dashboard .tournamentSpread {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 16pt;
+    margin: 10pt;
+}
+
+.dashboard .tournamentSpread .date::before {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    content: "\EBCC ";
+}
