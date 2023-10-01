@@ -1,0 +1,26 @@
+.login {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 25pt 16pt;
+    overflow: hidden;
+}
+
+.login input {
+    display: block;
+    max-width: 282pt;
+    width: 80vw;
+}
+
+.login button {
+    display: block;
+    float: right;
+}
+
+.login a {
+    display: block;
+    float: right;
+}

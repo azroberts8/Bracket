@@ -1,3 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap');
+@import url('login.css');
+
 * {
     box-sizing: border-box;
+}
+
+body {
+    margin: 0 auto;
+    background-color: rgb(10, 15, 31);
+}
+
+/* generic elements */
+
+h1, h2, h3 {
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 400;
+    text-shadow: 0px 0px 12px rgba(255,255,255,0.5),0px 0px 15px rgba(255,255,255,0.1),0px 0px 15px rgba(115,252,252,0.1);
+    margin: 10.5pt 8.25pt;
+    text-transform: uppercase;
+}
+
+input {
+    width: 176pt;
+    padding: 8.25pt 10.5pt;
+    margin: 10.5pt 8.25pt;
+    font-size: 12pt;
+    font-family: 'Rajdhani', sans-serif;
+    background-color: rgb(12, 26, 44);
+    color: #fff;
+    border: 1pt solid #fff;
+    outline: none;
+    box-shadow: inset 0px 0px 12px -3px rgba(255,255,255,0.5), inset 0px 0px 15px 0px rgba(255,255,255,0.1), inset 0px 0px 15px -3px rgba(115,252,252,0.1);
+}
+
+input:focus {
+    box-shadow: 0px 0px 12px -3px rgba(255,255,255,0.5),0px 0px 15px 0px rgba(255,255,255,0.1),0px 0px 15px -3px rgba(115,252,252,0.1),inset 0px 0px 12px -3px rgba(255,255,255,0.5),inset 0px 0px 15px -3px rgba(255,255,255,0.1),inset 0px 0px 15px -3px rgba(115,252,252,0.1);
+}
+
+button {
+    padding: 8.25pt 10.5pt;
+    margin: 10.5pt 8.25pt;
+    font-size: 12pt;
+    font-family: 'Rajdhani', sans-serif;
+    background-color: rgb(10, 15, 31);
+    color: #fff;
+    border: 1pt solid #fff;
+}
+
+button:hover {
+    color: rgb(12, 26, 44);
+    background-color: rgb(115, 252, 252);
+    border: 1pt solid rgb(115, 252, 252);
+    box-shadow: 0px 0px 12px -3px rgba(255,255,255,0.5),0px 0px 15px 0px rgba(255,255,255,0.1),0px 0px 15px -3px rgba(115,252,252,0.1),inset 0px 0px 12px -3px rgba(255,255,255,0.5),inset 0px 0px 15px -3px rgba(255,255,255,0.1),inset 0px 0px 15px -3px rgba(115,252,252,0.1);
+}
+
+a {
+    color: #e3ca7f;
+    margin: 10.5pt 8.25pt;
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a::after {
+    content: ' ›';
+}
+
+header {
+    height: 40pt;
+    margin: 10pt;
+}
+
+header h1 {
+    display: inline-block;
+    margin: 0 auto;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.window {
+    border: 1pt solid rgb(220, 255, 255);
+    box-shadow: 0px 0px 12px -3px rgba(255,255,255,0.5),0px 0px 15px 0px rgba(255,255,255,0.1),0px 0px 15px -3px rgba(115,252,252,0.1),inset 0px 0px 12px -3px rgba(255,255,255,0.5),inset 0px 0px 15px -3px rgba(255,255,255,0.1),inset 0px 0px 15px -3px rgba(115,252,252,0.1);
+    background-color: rgba(115, 252, 252, 0.1);
 }
