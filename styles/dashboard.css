@@ -24,10 +24,19 @@
     box-shadow: 0px 0px 12px -3px rgba(255,255,255,0.5),0px 0px 15px 0px rgba(255,255,255,0.1),0px 0px 15px -3px rgba(115,252,252,0.1);
 }
 
-.dashboard .profile .profileName {
+.dashboard .profile .profileInfo {
     display: inline-block;
-    vertical-align: top;
-    margin: 10.5pt 0;
+    vertical-align: top;;
+}
+
+.dashboard .profile .profileName {
+    display: block;
+    margin: 10.5pt 0 4pt;
+}
+
+.dashboard .profile .profileTagline {
+    display: block;
+    margin: 0;
 }
 
 .dashboard .selectTournament {
@@ -35,7 +44,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: auto auto;
-    margin-bottom: 25pt;
+    margin-bottom: 16pt;
 }
 
 .dashboard .selectTournament .eventActionItem h2 {
@@ -59,21 +68,24 @@
 .dashboard .tournamentSpread {
     display: grid;
     grid-template-columns: auto auto;
-    gap: 16pt;
-    margin: 10pt;
+    gap: 10pt;
+    margin: 0pt;
 }
 
 .dashboard .tournamentSpread .date::before {
-    font-family: 'Material Symbols Outlined';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    content: "\EBCC ";
+    font-family: 'Material Icons Outlined';
+    margin-right: 6pt;
+    content: "\e878";
+}
+
+.dashboard .tournamentSpread .location::before {
+    font-family: 'Material Icons Outlined';
+    margin-right: 6pt;
+    content: "\e55f";
+}
+
+.dashboard .tournamentSpread .participants::before {
+    font-family: 'Material Icons Outlined';
+    margin-right: 6pt;
+    content: "\e7fb";
 }

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Icons+Outlined');
 @import url('login.css');
 @import url('dashboard.css');
 
@@ -74,7 +75,7 @@ a::after {
 p {
     font-family: 'Rajdhani', sans-serif;
     color: #fff;
-    margin: 6pt 12pt;
+    margin: 7.5pt 19pt;
 }
 
 header {
