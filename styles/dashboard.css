@@ -1,8 +1,24 @@
 .dashboard {
     display: grid;
-    grid-template-columns: 176pt auto;
+    grid-template-columns: 40pt auto;
     column-gap: 10pt;
     margin: 10pt;
+}
+
+@media screen and (min-width: 768px) {
+    .dashboard {
+        grid-template-columns: 176pt auto;
+    }
+}
+
+@media screen and (min-width: 480px) {
+    .dashboard {
+        grid-template-columns: auto;
+    }
+}
+
+.dashboard .sidebar {
+    display: none;
 }
 
 .dashboard .profile {
@@ -40,11 +56,17 @@
 }
 
 .dashboard .selectTournament {
-    height: 110pt;
     width: 100%;
+    grid-template-columns: auto;
+    grid-template-rows: 110pt;
     display: grid;
-    grid-template-columns: auto auto;
     margin-bottom: 16pt;
+}
+
+@media screen and (min-width: 800px) {
+    .dashboard .selectTournament {
+        grid-template-columns: auto auto;
+    }
 }
 
 .dashboard .selectTournament .eventActionItem h2 {
@@ -67,9 +89,31 @@
 
 .dashboard .tournamentSpread {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr;
     gap: 10pt;
     margin: 0pt;
+}
+
+@media screen and (min-width: 800px) {
+    .dashboard .tournamentSpread {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 1300px) {
+    .dashboard .tournamentSpread {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 1900px) {
+    .dashboard .tournamentSpread {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+.dashboard .tournamentSpread .event {
+    height: 176pt;
 }
 
 .dashboard .tournamentSpread .date::before {
