@@ -1,0 +1,61 @@
+/* Tournament information */
+
+
+/* Tournament bracket */
+
+.tournament .bracket {
+    display: flex;
+    flex-direction: row;
+    margin-left: 43pt;
+}
+
+.bracket .round {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 176pt;
+    list-style: none;
+    padding: 0;
+}
+
+.round .spacer {
+    flex-grow: 1;
+}
+.round .spacer:first-child, .round .spacer:last-child {
+    flex-grow: .5;
+}
+
+.round .matchSpacer{
+    flex-grow: 1;
+}
+
+.tournament .bracket li.match {
+    font-family: 'Rajdhani', sans-serif;
+    padding-left: 16pt;
+    color: #fff;
+}
+
+li.match.winner {
+    font-weight:bold;
+}
+
+li.match.winner::after {
+    font-family: 'Material Icons Outlined';
+    margin-left: 10.5pt;
+    vertical-align: middle;
+    content: "\ea23";
+}
+
+li.match span {
+    float:right;
+    margin-right:5px;
+}
+
+li.matchSpacer { 
+    border-right: 1pt solid rgb(220, 255, 255);
+    border-top: 1pt solid rgb(220, 255, 255);
+    border-bottom: 1pt solid rgb(220, 255, 255);
+    min-height: 40px;
+    box-shadow: 0px 0px 12px -3px rgba(255,255,255,0.5),0px 0px 15px 0px rgba(255,255,255,0.1),0px 0px 15px -3px rgba(115,252,252,0.1),inset 0px 0px 12px -3px rgba(255,255,255,0.5),inset 0px 0px 15px -3px rgba(255,255,255,0.1),inset 0px 0px 15px -3px rgba(115,252,252,0.1);
+    clip-path: inset(-12px -12px -12px 12px);
+}

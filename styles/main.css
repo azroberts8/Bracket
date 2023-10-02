@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Icons+Outlined');
 @import url('login.css');
 @import url('dashboard.css');
+@import url('tournament.css');
 
 * {
     box-sizing: border-box;
