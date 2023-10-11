@@ -1,5 +1,65 @@
 /* Tournament information */
+.tournament {
+    display: block;
+}
 
+.tournament .tournamentInfo, .tournament .tournamentEditor {
+    margin: 10.5pt;
+    padding: 0 10.5pt 10.5pt;
+}
+
+.tournament h2 {
+    margin-left: 19pt;
+}
+
+.tournament .sport::before {
+    font-family: 'Material Icons Outlined';
+    margin-right: 6pt;
+    content: "\ea2f";
+}
+
+.tournament .date::before {
+    font-family: 'Material Icons Outlined';
+    margin-right: 6pt;
+    content: "\e878";
+}
+
+.tournament .location::before {
+    font-family: 'Material Icons Outlined';
+    margin-right: 6pt;
+    content: "\e55f";
+}
+
+.tournament .participants::before {
+    font-family: 'Material Icons Outlined';
+    margin-right: 6pt;
+    content: "\e7fb";
+}
+
+.tournament .eventID::before {
+    font-family: 'Material Icons Outlined';
+    margin-right: 6pt;
+    content: "\e80b";
+}
+
+/* Admin View */
+.tournament .tournamentEditor span {
+    display: block;
+    color: #fff;
+    margin: 10.5pt 19pt;
+}
+
+.tournament .tournamentEditor input {
+    margin: 0;
+}
+
+.tournament .buttonRack {
+    margin: 10.5pt 0 8.5pt 37pt;
+}
+
+.tournament .buttonRack button {
+    margin-left: 0;
+}
 
 /* Tournament bracket */
 
@@ -41,7 +101,7 @@ li.match.winner {
 
 li.match.winner::after {
     font-family: 'Material Icons Outlined';
-    margin-left: 10.5pt;
+    margin-left: 6.6pt;
     vertical-align: middle;
     content: "\ea23";
 }

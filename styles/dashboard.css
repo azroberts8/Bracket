@@ -98,6 +98,12 @@
     height: 176pt;
 }
 
+.dashboard .sport::before {
+    font-family: 'Material Icons Outlined';
+    margin-right: 6pt;
+    content: "\ea2f";
+}
+
 .dashboard .tournamentSpread .date::before {
     font-family: 'Material Icons Outlined';
     margin-right: 6pt;
