@@ -1,89 +1,170 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bracket</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/10.4.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/10.4.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/10.4.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/10.4.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/10.4.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/10.4.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/10.4.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/10.4.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/10.4.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/10.4.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <script type="module" src="app.js" defer></script>
+</head>
+<body>
+    <header class="window">
+        <h1>Bracket</h1>
+    </header>
+    <main>
+        <form class="window login">
+            <h1>Login</h1>
+            <input type="text" placeholder="Username">
+            <input type="password" placeholder="Password">
+            <button>Login</button>
+            <br><br><br><br>
+            <a href="#register">Need an account? Create one here!</a>
+        </form>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+        <div class="dashboard">
+            <div class="main">
+                <div class="window profile">
+                    <div class="profileImage" style="background-image: url('profile-photo.jpg');"></div>
+                    <div class="profileInfo">
+                        <h1 class="profileName">@Username123</h1>
+                        <p class="profileTagline">Destroying noobs in every event. Beware opposing me.</p>
+                    </div>
+                </div>
+                <div class="window selectTournament">
+                    <div class="eventActionItem">
+                        <h2>CREATE EVENT</h2>
+                        <input type="text" placeholder="Event Name">
+                        <button>Create Event</button>
+                    </div>
+                    <div class="eventActionItem">
+                        <h2>JOIN EVENT</h2>
+                        <input type="text" placeholder="Event Code">
+                        <button>Join Event</button>
+                    </div>
+                </div>
+                <div class="tournamentSpread">
+                    <div class="window event">
+                        <h2>Ultimate Rock Paper Scissors</h2>
+                        <p class="sport">Rock Paper Scissors</p>
+                        <p class="date">Oct 20, 2023</p>
+                        <p class="location">University of Delaware Bob Carpenter Center</p>
+                        <p class="participants">5,632 participants</p>
+                    </div>
+                    <div class="window event">
+                        <h2>Weekend Mario Kart Tournament</h2>
+                        <p class="sport">Mario Kart 8</p>
+                        <p class="date">Oct 21 - Oct 22, 2023</p>
+                        <p class="location">Sparc Lab</p>
+                        <p class="participants">21 participants</p>
+                    </div>
+                    <div class="window event">
+                        <h2>Goal Smasher 2023</h2>
+                        <p class="sport">Rocket League</p>
+                        <p class="date">Nov 4 - Nov 5, 2023</p>
+                        <p class="location">UDel E-Sports Arena</p>
+                        <p class="participants">83 participants</p>
+                    </div>
+                    <div class="window event">
+                        <h2>Blue Hens Soccer Match</h2>
+                        <p class="sport">Soccer</p>
+                        <p class="date">Mar 3, 2024</p>
+                        <p class="location">UDel Green</p>
+                        <p class="participants">102 participants</p>
+                    </div>
+                    <div class="window event">
+                        <h2>Blue Hens Soccer Match 2</h2>
+                        <p class="sport">Soccer</p>
+                        <p class="date">Mar 10, 2024</p>
+                        <p class="location">UDel Green</p>
+                        <p class="participants">102 participants</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        <div class="tournament">
+            <div class="window tournamentInfo">
+                <h2>Ultimate Rock Paper Scissors</h2>
+                <p class="sport">Rock Paper Scissors</p>
+                <p class="date">Oct 20, 2023</p>
+                <p class="location">University of Delaware Bob Carpenter Center</p>
+                <p class="participants">5,632 participants</p>
+                <p class="eventID">Event ID: some-jibberish-here</p>
+                <div class="buttonRack">
+                    <button>Post Loss</button>
+                </div>
+            </div>
+            <div class="window tournamentEditor">
+                <h2>Ultimate Rock Paper Scissors</h2>
+                <span class="sport"><input type="text" placeholder="Game/Sport" value="Rock Paper Scissors"></span>
+                <span class="date"><input type="date" placeholder="Date" value="2023-10-20"></span>
+                <span class="location"><input type="text" placeholder="Location" value="University of Delaware Bob Carpenter Center"></span>
+                <p class="participants">5,632 participants</p>
+                <p class="eventID">Event ID: some-jibberish-here</p>
+                <div class="buttonRack">
+                    <button>Save Changes</button>
+                    <button>Post Loss</button>
+                </div>
+            </div>
+            <div class="bracket">
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+                <ul class="round round1">
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top winner">@azroberts</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom">@urmom</li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top">@noobmaster69</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom winner">@andynovo</li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top winner">@alia</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom">@trevor</li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top">@bimbi</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom winner">@chisos</li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+
+                <ul class="round round2">
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top winner">@azroberts</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom">@andynovo</li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top">@alia</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom winner">@chisos</li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+
+                <ul class="round round3">
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top winner">@azroberts</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom">@chisos</li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+</body>
 </html>
