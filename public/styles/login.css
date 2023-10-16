@@ -1,5 +1,5 @@
 .login {
-    display: none;
+    display: block;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -13,6 +13,11 @@
     display: block;
     max-width: 282pt;
     width: 80vw;
+}
+
+.login p {
+    margin-left: 8.25pt;
+    margin-right: 8.25pt;
 }
 
 .login button {
