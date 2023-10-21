@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { getDatabase, ref, set, push, child, update, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 import { getAuth, getRedirectResult, onAuthStateChanged, signInWithRedirect, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
 //import { Auth, getRedirectResult } from "./modules/auth.js";
@@ -35,13 +35,52 @@ export class App {
             // user is signed in
             window.app.user = user;
             console.log(user);
-            window.app.renderDashboard();
+            window.app.loadDashboard();
         } else {
             // user is logged out
             window.app.user = null;
             window.app.renderLogin();
         }
     }
+
+    loadDashboard() {
+        const userID = this.user.uid;
+        const dashRef = ref(this.database, `users/${userID}/`);
+        onValue(dashRef, (snapshot) => {
+            if(!snapshot.exists()) {
+                // data for user does not yet exist (could be first sign in)
+                window.app.dashData = {
+                    displayName: window.app.user.displayName,
+                    email: window.app.user.email,
+                    tournaments: {}
+                }
+                set(dashRef, window.app.dashData);
+            } else {
+                window.app.dashData = snapshot.val();
+            }
+            this.renderDashboard();
+        });
+    }
+
+    createEvent() {
+        const eventName = document.getElementById("eventNameInput").value;
+        const eventData = {
+            name: eventName,
+            owner: window.app.user.uid,
+            members: {
+                0: window.app.user.uid
+            }
+        };
+        const tournID = push(child(ref(this.database), 'tournaments')).key;
+
+        const updates = {};
+        updates[`/tournaments/${tournID}`] = eventData;
+
+        update(ref(this.database), updates);
+
+        window.location.href = `t/${ tournID }`;
+    }
+
 
     renderLogin() {
         document.querySelector("main").innerHTML = `
@@ -58,7 +97,7 @@ export class App {
         <div class="dashboard">
             <div class="main">
                 <div class="window profile">
-                    <div class="profileImage" style="background-image: url('${ this.user.photoURL }');"></div>
+                    <img class="profileImage" src="${ this.user.photoURL }" referrerpolicy="no-referrer">
                     <div class="profileInfo">
                         <h1 class="profileName">${ this.user.displayName }</h1>
                         <p class="profileTagline">${ this.user.email }</p>
@@ -67,8 +106,8 @@ export class App {
                 <div class="window selectTournament">
                     <div class="eventActionItem">
                         <h2>CREATE EVENT</h2>
-                        <input type="text" placeholder="Event Name">
-                        <button>Create Event</button>
+                        <input type="text" placeholder="Event Name" id="eventNameInput">
+                        <button onClick="window.app.createEvent();">Create Event</button>
                     </div>
                     <div class="eventActionItem">
                         <h2>JOIN EVENT</h2>
@@ -77,44 +116,20 @@ export class App {
                     </div>
                 </div>
                 <div class="tournamentSpread">
-                    <div class="window event">
-                        <h2>Ultimate Rock Paper Scissors</h2>
-                        <p class="sport">Rock Paper Scissors</p>
-                        <p class="date">Oct 20, 2023</p>
-                        <p class="location">University of Delaware Bob Carpenter Center</p>
-                        <p class="participants">5,632 participants</p>
-                    </div>
-                    <div class="window event">
-                        <h2>Weekend Mario Kart Tournament</h2>
-                        <p class="sport">Mario Kart 8</p>
-                        <p class="date">Oct 21 - Oct 22, 2023</p>
-                        <p class="location">Sparc Lab</p>
-                        <p class="participants">21 participants</p>
-                    </div>
-                    <div class="window event">
-                        <h2>Goal Smasher 2023</h2>
-                        <p class="sport">Rocket League</p>
-                        <p class="date">Nov 4 - Nov 5, 2023</p>
-                        <p class="location">UDel E-Sports Arena</p>
-                        <p class="participants">83 participants</p>
-                    </div>
-                    <div class="window event">
-                        <h2>Blue Hens Soccer Match</h2>
-                        <p class="sport">Soccer</p>
-                        <p class="date">Mar 3, 2024</p>
-                        <p class="location">UDel Green</p>
-                        <p class="participants">102 participants</p>
-                    </div>
-                    <div class="window event">
-                        <h2>Blue Hens Soccer Match 2</h2>
-                        <p class="sport">Soccer</p>
-                        <p class="date">Mar 10, 2024</p>
-                        <p class="location">UDel Green</p>
-                        <p class="participants">102 participants</p>
-                    </div>
+                    ${ (!("tournaments" in window.app.dashData)) ? "" : Object.entries(window.app.dashData.tournaments).reduce((out, val) => {
+                        return out.concat(`
+                            <div class="window event">
+                                <h2>${ val[1].name }</h2>
+                                <p class="sport">${ ("type" in val[1]) ? val[1].type : "-" }</p>
+                                <p class="date">${ ("date" in val[1]) ? val[1].date : "-" }</p>
+                                <p class="location">${ ("location" in val[1]) ? val[1].location : "-" }</p>
+                                <p class="participants">- participants</p>
+                            </div>
+                        `);
+                    }, "") }
                 </div>
             </div>
-        </div>`
+        </div>`;
     }
 }
 
