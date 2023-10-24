@@ -78,7 +78,19 @@ export class App {
 
         update(ref(this.database), updates);
 
-        window.location.href = `t/${ tournID }`;
+        window.location.href = `/t/${ tournID }`;
+    }
+
+    joinEvent() {
+        const joinObject = {
+            tournID: document.getElementById("eventIDInput").value,
+            userID: window.app.user.uid
+        }
+
+        const actionID = push(child(ref(this.database), 'join')).key;
+        const updates = {};
+        updates[`/join/${actionID}`] = joinObject;
+        update(ref(this.database), updates);
     }
 
 
@@ -111,8 +123,8 @@ export class App {
                     </div>
                     <div class="eventActionItem">
                         <h2>JOIN EVENT</h2>
-                        <input type="text" placeholder="Event Code">
-                        <button>Join Event</button>
+                        <input type="text" placeholder="Event Code" id="eventIDInput">
+                        <button onClick="window.app.joinEvent()">Join Event</button>
                     </div>
                 </div>
                 <div class="tournamentSpread">
@@ -123,7 +135,8 @@ export class App {
                                 <p class="sport">${ ("type" in val[1]) ? val[1].type : "-" }</p>
                                 <p class="date">${ ("date" in val[1]) ? val[1].date : "-" }</p>
                                 <p class="location">${ ("location" in val[1]) ? val[1].location : "-" }</p>
-                                <p class="participants">- participants</p>
+                                <p class="participants">${ Object.entries(val[1].members).length } participants</p>
+                                <a href="/t/${ val[0] }">View Event</a>
                             </div>
                         `);
                     }, "") }

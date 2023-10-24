@@ -24,6 +24,7 @@ const { onValueCreated, onValueUpdated } = require("firebase-functions/v2/databa
 const {logger} = require("firebase-functions");
 
 const admin = require("firebase-admin");
+const { user } = require("firebase-functions/v1/auth");
 admin.initializeApp();
 
 // exports.stagingtournament = onValueCreated("/staging/new-tournament/{tid}", (event) => {
@@ -39,26 +40,54 @@ exports.newTournament = onValueCreated("/tournaments/{tournID}", (event) => {
     let tournamentID = event.params.tournID;
     let owner = data.owner;
 
-    return event.data.ref.parent.parent.child("users").child(owner).child("tournaments").child(tournamentID).set(data);
+    let bracket = {
+        0: {
+            0: data.owner
+        },
+        round: 0
+    }
+
+    return event.data.ref.parent.parent.child("users").child(owner).child("tournaments").child(tournamentID).set(data)
+        .then(event.data.ref.parent.parent.child("brackets").child(tournamentID).set(bracket));
 });
 
 exports.editTournament = onValueUpdated("/tournaments/{tournID}", (event) => {
-    let data = event.data.val();
-    let tournamentID = event.params.tournID;
-    let members = Object.values(data.members);
+    let tournID = event.params.tournID;
+    let dbRef = admin.database().ref();
 
-    let actions = event.data.ref.parent.parent.child("users").child(members[0]).child("tournaments").child(tournamentID).set(data);
-    for(let i = 1; i < members.length; i++) {
-        actions = actions.then(() => {
-            return event.data.ref.parent.parent.child("users").child(members[i]).child("tournaments").child(tournamentID).set(data);
-        });
-    }
+    return dbRef.child('tournaments').child(tournID).once('value').then((snapshot) => {
+        const tournament = snapshot.val();
+
+        return Promise.all(Object.values(tournament.members).map((userID) => {
+            return dbRef.child('users').child(userID).child('tournaments').child(tournID).set(tournament);
+        }));
+    });
 });
 
-// exports.loseRound = onValueCreated("/lose/{tournID}/{roundNum}", (event) => {
-//     let userID = event.data.val();
-//     let tournamentID = event.params.tournID;
-//     let roundNum = event.params.roundNum;
+exports.joinEvent = onValueCreated("/join/{actID}", (event) => {
+    let data = event.data.val();
+    let tournID = ("tournID" in data) ? data.tournID : "null";
+    let userID = ("userID" in data) ? data.userID : "null";
 
-    
-// });
+    let dbRef = admin.database().ref();
+
+    let bracketPromise = dbRef.child('brackets').child(tournID).once('value').then((snapshot) => {
+        if(snapshot.exists()) return snapshot.val();
+        else return {};
+    });
+    let membersPromise = dbRef.child('tournaments').child(tournID).child('members').once('value').then((snapshot) => {
+        if(snapshot.exists()) return snapshot.val();
+        else return {};
+    });
+
+    return Promise.all([bracketPromise, membersPromise]).then((values) => {
+        let bracket = values[0];
+        let members = values[1];
+        if(!Object.values(members).includes(userID) && bracket.round === 0) {
+            let memberNum = Object.values(members).length;
+
+            return dbRef.child('brackets').child(tournID).child('0').child(`${ memberNum }`).set(userID)
+                .then(dbRef.child('tournaments').child(tournID).child('members').child(`${ memberNum }`).set(userID));
+        } else return dbRef.child('error').set(members);
+    })
+});
