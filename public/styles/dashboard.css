@@ -118,3 +118,8 @@
     margin-right: 6pt;
     content: "\e7fb";
 }
+
+.dashboard .tournamentSpread a {
+    margin: 7.5pt 19pt;
+    float: right;
+}

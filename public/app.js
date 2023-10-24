@@ -189,7 +189,7 @@ export class App {
             <div class="window tournamentInfo">
                 <h2>${ this.tournData.name }</h2>
                 <p class="sport">${ ("type" in this.tournData) ? this.tournData.type : "-" }</p>
-                <p class="date">${ ("date" in this.tournData) ? this.tournData.type : "-" }</p>
+                <p class="date">${ ("date" in this.tournData) ? new Date(this.tournData.date).toDateString() : "-" }</p>
                 <p class="location">${ ("location" in this.tournData) ? this.tournData.location : "-" }</p>
                 <p class="participants">${ Object.values(this.tournData.members).length } participants</p>
                 <p class="eventID">Event ID: ${ tournID }</p>
