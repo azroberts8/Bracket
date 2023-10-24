@@ -34,8 +34,11 @@ export class App {
         if(user) {
             // user is signed in
             window.app.user = user;
-            console.log(user);
-            window.app.loadDashboard();
+            
+            const path = document.location.pathname.split("/").slice(1);
+            if(path[0] === "t") {
+                window.app.loadTournament(path[1]);
+            } else window.app.loadDashboard();
         } else {
             // user is logged out
             window.app.user = null;
@@ -60,6 +63,18 @@ export class App {
             }
             this.renderDashboard();
         });
+    }
+
+    loadTournament(tournID) {
+        const tournRef = ref(this.database, `tournaments/${tournID}/`);
+        onValue(tournRef, (snapshot) => {
+            if(!snapshot.exists()) {
+                window.app.loadDashboard();
+            } else {
+                window.app.tournData = snapshot.val();
+            }
+            this.renderTournament(tournID);
+        })
     }
 
     createEvent() {
@@ -90,6 +105,15 @@ export class App {
         const actionID = push(child(ref(this.database), 'join')).key;
         const updates = {};
         updates[`/join/${actionID}`] = joinObject;
+        update(ref(this.database), updates);
+    }
+
+    updateTournament() {
+        const updates = {};
+        if(document.getElementById("typeInput").value != this.tournData.type) updates[`/tournaments/${ document.location.pathname.split("/")[2] }/type`] = document.getElementById("typeInput").value;
+        if(document.getElementById("dateInput").value != this.tournData.date) updates[`/tournaments/${ document.location.pathname.split("/")[2] }/date`] = document.getElementById("dateInput").value;
+        if(document.getElementById("locationInput").value != this.tournData.location) updates[`/tournaments/${ document.location.pathname.split("/")[2] }/location`] = document.getElementById("locationInput").value;
+
         update(ref(this.database), updates);
     }
 
@@ -143,6 +167,94 @@ export class App {
                 </div>
             </div>
         </div>`;
+    }
+
+    renderTournament(tournID) {
+        document.querySelector("main").innerHTML = `
+        <div class="tournament">
+            ${ (this.user.uid === this.tournData.owner) ? `
+            <div class="window tournamentEditor">
+                <h2>${ this.tournData.name }</h2>
+                <span class="sport"><input type="text" id="typeInput" placeholder="Game/Sport" value="${ ("type" in this.tournData) ? this.tournData.type : "" }"></span>
+                <span class="date"><input type="date" id="dateInput" placeholder="Date" value="${ ("date" in this.tournData) ? this.tournData.date : "" }"></span>
+                <span class="location"><input type="text" id="locationInput" placeholder="Location" value="${ ("location" in this.tournData) ? this.tournData.location : "" }"></span>
+                <p class="participants">${ Object.values(this.tournData.members).length } participants</p>
+                <p class="eventID">Event ID: ${ tournID }</p>
+                <div class="buttonRack">
+                    <button onclick="window.app.updateTournament()">Save Changes</button>
+                    <button>Post Loss</button>
+                </div>
+            </div>
+            ` : `
+            <div class="window tournamentInfo">
+                <h2>${ this.tournData.name }</h2>
+                <p class="sport">${ ("type" in this.tournData) ? this.tournData.type : "-" }</p>
+                <p class="date">${ ("date" in this.tournData) ? this.tournData.type : "-" }</p>
+                <p class="location">${ ("location" in this.tournData) ? this.tournData.location : "-" }</p>
+                <p class="participants">${ Object.values(this.tournData.members).length } participants</p>
+                <p class="eventID">Event ID: ${ tournID }</p>
+                <div class="buttonRack">
+                    <button>Post Loss</button>
+                </div>
+            </div>` }
+            <div class="bracket">
+
+                <ul class="round round1">
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top winner">@azroberts</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom">@urmom</li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top">@noobmaster69</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom winner">@andynovo</li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top winner">@alia</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom">@trevor</li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top">@bimbi</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom winner">@chisos</li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+
+                <ul class="round round2">
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top winner">@azroberts</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom">@andynovo</li>
+
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top">@alia</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom winner">@chisos</li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+
+                <ul class="round round3">
+                    <li class="spacer">&nbsp;</li>
+
+                    <li class="match top winner">@azroberts</li>
+                    <li class="spacer matchSpacer">&nbsp;</li>
+                    <li class="match bottom">@chisos</li>
+
+                    <li class="spacer">&nbsp;</li>
+                </ul>
+            </div>
+        </div>
+        `
     }
 }
 

@@ -1,6 +1,6 @@
 /* Tournament information */
 .tournament {
-    display: none;
+    display: block;
 }
 
 .tournament .tournamentInfo, .tournament .tournamentEditor {
