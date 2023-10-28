@@ -73,8 +73,15 @@ export class App {
             } else {
                 window.app.tournData = snapshot.val();
             }
-            this.renderTournament(tournID);
-        })
+
+            const bracketRef = ref(this.database, `brackets/${tournID}/`);
+            onValue(bracketRef, (snapshot) => {
+                if(snapshot.exists()) {
+                    window.app.bracketData = snapshot.val();
+                }
+                window.app.renderTournament(tournID);
+            });
+        });
     }
 
     createEvent() {
@@ -183,15 +190,30 @@ export class App {
     }
 
     renderTournament(tournID) {
+        let bracketUI = "";
+        for(let i = 1; i < Object.entries(window.app.bracketData).length; i++) {
+            bracketUI += `<ul class="round round${i}">`;
+
+            let spaces = Math.ceil(Object.entries(window.app.tournData.members).length / (2 ** (i - 1)));
+            for(let j = 1; j <= spaces; j++) {
+                let uname = `${j}` in window.app.bracketData[`${i}`] ? this.bracketData[`${i}`][`${j}`] : `???`;
+                bracketUI += (j % 2 === 0) ? `<li class="spacer matchSpacer">&nbsp;</li>
+                <li class="match bottom">${ uname }</li>`: `<li class="spacer">&nbsp;</li>
+                <li class="match top">${ uname }</li>`;
+            }
+
+            bracketUI += "<li class='spacer'>&nbsp;</li></ul>";
+        }
+
         document.querySelector("main").innerHTML = `
         <div class="tournament">
-            ${ (this.user.uid === this.tournData.owner) ? `
+            ${ (window.app.user.uid === window.app.tournData.owner) ? `
             <div class="window tournamentEditor">
-                <h2>${ this.tournData.name }</h2>
+                <h2>${ window.app.tournData.name }</h2>
                 <span class="sport"><input type="text" id="typeInput" placeholder="Game/Sport" value="${ ("type" in this.tournData) ? this.tournData.type : "" }"></span>
                 <span class="date"><input type="date" id="dateInput" placeholder="Date" value="${ ("date" in this.tournData) ? this.tournData.date : "" }"></span>
                 <span class="location"><input type="text" id="locationInput" placeholder="Location" value="${ ("location" in this.tournData) ? this.tournData.location : "" }"></span>
-                <p class="participants">${ Object.values(this.tournData.members).length } participants</p>
+                <p class="participants">${ Object.values(window.app.tournData.members).length } participants</p>
                 <p class="eventID">Event ID: ${ tournID }</p>
                 <div class="buttonRack">
                     <button onclick="window.app.updateTournament()">Save Changes</button>
@@ -200,71 +222,18 @@ export class App {
             </div>
             ` : `
             <div class="window tournamentInfo">
-                <h2>${ this.tournData.name }</h2>
-                <p class="sport">${ ("type" in this.tournData) ? this.tournData.type : "-" }</p>
-                <p class="date">${ ("date" in this.tournData) ? new Date(this.tournData.date).toDateString() : "-" }</p>
-                <p class="location">${ ("location" in this.tournData) ? this.tournData.location : "-" }</p>
-                <p class="participants">${ Object.values(this.tournData.members).length } participants</p>
+                <h2>${ window.app.tournData.name }</h2>
+                <p class="sport">${ ("type" in window.app.tournData) ? window.app.tournData.type : "-" }</p>
+                <p class="date">${ ("date" in window.app.tournData) ? new Date(window.app.tournData.date).toDateString() : "-" }</p>
+                <p class="location">${ ("location" in window.app.tournData) ? window.app.tournData.location : "-" }</p>
+                <p class="participants">${ Object.values(window.app.tournData.members).length } participants</p>
                 <p class="eventID">Event ID: ${ tournID }</p>
                 <div class="buttonRack">
                     <button onclick="window.app.postLoss()">Post Loss</button>
                 </div>
             </div>` }
             <div class="bracket">
-
-                <ul class="round round1">
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="match top winner">@azroberts</li>
-                    <li class="spacer matchSpacer">&nbsp;</li>
-                    <li class="match bottom">@urmom</li>
-
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="match top">@noobmaster69</li>
-                    <li class="spacer matchSpacer">&nbsp;</li>
-                    <li class="match bottom winner">@andynovo</li>
-
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="match top winner">@alia</li>
-                    <li class="spacer matchSpacer">&nbsp;</li>
-                    <li class="match bottom">@trevor</li>
-
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="match top">@bimbi</li>
-                    <li class="spacer matchSpacer">&nbsp;</li>
-                    <li class="match bottom winner">@chisos</li>
-
-                    <li class="spacer">&nbsp;</li>
-                </ul>
-
-                <ul class="round round2">
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="match top winner">@azroberts</li>
-                    <li class="spacer matchSpacer">&nbsp;</li>
-                    <li class="match bottom">@andynovo</li>
-
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="match top">@alia</li>
-                    <li class="spacer matchSpacer">&nbsp;</li>
-                    <li class="match bottom winner">@chisos</li>
-
-                    <li class="spacer">&nbsp;</li>
-                </ul>
-
-                <ul class="round round3">
-                    <li class="spacer">&nbsp;</li>
-
-                    <li class="match top winner">@azroberts</li>
-                    <li class="spacer matchSpacer">&nbsp;</li>
-                    <li class="match bottom">@chisos</li>
-
-                    <li class="spacer">&nbsp;</li>
-                </ul>
+                ${ bracketUI }
             </div>
         </div>
         `
