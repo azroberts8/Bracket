@@ -82,6 +82,7 @@ export class App {
         const eventData = {
             name: eventName,
             owner: window.app.user.uid,
+            ownerDisplay: window.app.user.displayName,
             members: {
                 0: window.app.user.uid
             }
@@ -99,7 +100,8 @@ export class App {
     joinEvent() {
         const joinObject = {
             tournID: document.getElementById("eventIDInput").value,
-            userID: window.app.user.uid
+            userID: window.app.user.uid,
+            userDisplay: window.app.user.displayName
         }
 
         const actionID = push(child(ref(this.database), 'join')).key;
@@ -117,6 +119,17 @@ export class App {
         update(ref(this.database), updates);
     }
 
+    postLoss() {
+        const loseObject = {
+            userID: window.app.user.uid,
+            tournID: document.location.pathname.split("/")[2]
+        }
+
+        const actionID = push(child(ref(this.database), 'lose')).key;
+        const updates = {};
+        updates[`/lose/${actionID}`] = loseObject;
+        update(ref(this.database), updates);
+    }
 
     renderLogin() {
         document.querySelector("main").innerHTML = `
@@ -182,7 +195,7 @@ export class App {
                 <p class="eventID">Event ID: ${ tournID }</p>
                 <div class="buttonRack">
                     <button onclick="window.app.updateTournament()">Save Changes</button>
-                    <button>Post Loss</button>
+                    <button onclick="window.app.postLoss()">Post Loss</button>
                 </div>
             </div>
             ` : `
@@ -194,7 +207,7 @@ export class App {
                 <p class="participants">${ Object.values(this.tournData.members).length } participants</p>
                 <p class="eventID">Event ID: ${ tournID }</p>
                 <div class="buttonRack">
-                    <button>Post Loss</button>
+                    <button onclick="window.app.postLoss()">Post Loss</button>
                 </div>
             </div>` }
             <div class="bracket">
