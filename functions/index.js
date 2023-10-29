@@ -75,10 +75,7 @@ exports.joinEvent = onValueCreated("/join/{actID}", (event) => {
 
     return Promise.all([bracketPromise, membersPromise]).then((values) => {
         let bracket = values[0];
-        //let members = values[1];
         let members = Object.values(values[1]);
-        logger.log(bracket);
-        logger.log(members);
         if(!(members.includes(userID)) && bracket.round === 1) {
             let memberNum = members.length + 1;
 
